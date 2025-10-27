@@ -9,7 +9,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [filter, setFilter] = useState("all");
 
-  // BUG 1: This function doesn't properly add new todos
+  // BUG 1: This function doesn't properly add new todos 
   const addTodo = () => {
     if (inputValue.trim()) {
       const newTodo = {
@@ -17,7 +17,7 @@ function App() {
         text: inputValue,
         completed: false,
       };
-      todos.push(newTodo);
+      setTodos((todos) => [...todos, newTodo]);
       setInputValue("");
     }
   };
