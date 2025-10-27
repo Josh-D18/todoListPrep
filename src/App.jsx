@@ -10,11 +10,16 @@ function App() {
   const [filter, setFilter] = useState("all");
 
   // BUG 1: This function doesn't properly add new todos
-  const addTodo = () => {
-    if (inputValue.trim()) {
+  const addTodo = (e) => {
+    e.preventDefault();
+
+    if (inputValue.length === 0) {
+      return;
+    } else {
+      const userInput = inputValue.trim();
       const newTodo = {
         id: Date.now(),
-        text: inputValue,
+        text: userInput,
         completed: false,
       };
       setTodos((todos) => [...todos, newTodo]);
@@ -49,6 +54,14 @@ function App() {
     return todos;
   };
 
+  const handleDeleteButton = () => {
+    setTodos(todos.filter((todo) => todo.completed !== true));
+  };
+
+  const handleTodoEdit = (id) => {
+    console.log("Hello");
+  };
+
   const filteredTodos = getFilteredTodos();
 
   return (
@@ -57,7 +70,7 @@ function App() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Todo List</h1>
 
         {/* BUG 5: Input doesn't submit on Enter key */}
-        <div className="flex gap-2 mb-6">
+        <form className="flex gap-2 mb-6" onSubmit={addTodo}>
           <input
             type="text"
             value={inputValue}
@@ -66,12 +79,18 @@ function App() {
             className="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
-            onClick={addTodo}
+            type="submit"
             className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Add
           </button>
-        </div>
+        </form>
+        <button
+          className="px-6 py-2 bg-red-500 text-white rounded hover:bg-blue-300 mb-5"
+          onClick={handleDeleteButton}
+        >
+          Clear Completed Projects
+        </button>
 
         <div className="flex gap-2 mb-4">
           <button
@@ -105,6 +124,7 @@ function App() {
             <div
               key={todo.id}
               className="flex items-center gap-3 p-3 bg-gray-50 rounded hover:bg-gray-100"
+              onDoubleClick={() => handleTodoEdit(todo.id)}
             >
               <input
                 type="checkbox"
