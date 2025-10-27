@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
+import React from "react";
 
 function App() {
   const [todos, setTodos] = useState([
-    { id: 1, text: 'Learn React', completed: false },
-    { id: 2, text: 'Build a project', completed: false }
+    { id: 1, text: "Learn React", completed: false },
+    { id: 2, text: "Build a project", completed: false },
   ]);
-  const [inputValue, setInputValue] = useState('');
-  const [filter, setFilter] = useState('all');
+  const [inputValue, setInputValue] = useState("");
+  const [filter, setFilter] = useState("all");
 
   // BUG 1: This function doesn't properly add new todos
   const addTodo = () => {
@@ -14,34 +15,36 @@ function App() {
       const newTodo = {
         id: Date.now(),
         text: inputValue,
-        completed: false
+        completed: false,
       };
       todos.push(newTodo);
-      setInputValue('');
+      setInputValue("");
     }
   };
 
   // BUG 2: Toggle doesn't work correctly
   const toggleTodo = (id) => {
-    setTodos(todos.map(todo => {
-      if (todo.id = id) {
-        return { ...todo, completed: !todo.completed };
-      }
-      return todo;
-    }));
+    setTodos(
+      todos.map((todo) => {
+        if ((todo.id = id)) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      })
+    );
   };
 
   // BUG 3: Delete doesn't remove the right item
   const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   // BUG 4: Filter logic is broken
   const getFilteredTodos = () => {
-    if (filter === 'active') {
-      return todos.filter(todo => todo.completed);
-    } else if (filter === 'completed') {
-      return todos.filter(todo => !todo.completed);
+    if (filter === "active") {
+      return todos.filter((todo) => todo.completed);
+    } else if (filter === "completed") {
+      return todos.filter((todo) => !todo.completed);
     }
     return todos;
   };
@@ -52,7 +55,7 @@ function App() {
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Todo List</h1>
-        
+
         {/* BUG 5: Input doesn't submit on Enter key */}
         <div className="flex gap-2 mb-6">
           <input
@@ -72,27 +75,33 @@ function App() {
 
         <div className="flex gap-2 mb-4">
           <button
-            onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded ${filter === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setFilter("all")}
+            className={`px-4 py-2 rounded ${
+              filter === "all" ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
           >
             All
           </button>
           <button
-            onClick={() => setFilter('active')}
-            className={`px-4 py-2 rounded ${filter === 'active' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setFilter("active")}
+            className={`px-4 py-2 rounded ${
+              filter === "active" ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
           >
             Active
           </button>
           <button
-            onClick={() => setFilter('completed')}
-            className={`px-4 py-2 rounded ${filter === 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setFilter("completed")}
+            className={`px-4 py-2 rounded ${
+              filter === "completed" ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
           >
             Completed
           </button>
         </div>
 
         <div className="space-y-2">
-          {filteredTodos.map(todo => (
+          {filteredTodos.map((todo) => (
             <div
               key={todo.id}
               className="flex items-center gap-3 p-3 bg-gray-50 rounded hover:bg-gray-100"
@@ -103,7 +112,11 @@ function App() {
                 onChange={() => toggleTodo(todo.id)}
                 className="w-5 h-5"
               />
-              <span className={`flex-1 ${todo.completed ? 'line-through text-gray-500' : ''}`}>
+              <span
+                className={`flex-1 ${
+                  todo.completed ? "line-through text-gray-500" : ""
+                }`}
+              >
                 {todo.text}
               </span>
               <button
