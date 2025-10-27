@@ -9,7 +9,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [filter, setFilter] = useState("all");
 
-  // BUG 1: This function doesn't properly add new todos 
+  // BUG 1: This function doesn't properly add new todos
   const addTodo = () => {
     if (inputValue.trim()) {
       const newTodo = {
@@ -26,7 +26,7 @@ function App() {
   const toggleTodo = (id) => {
     setTodos(
       todos.map((todo) => {
-        if ((todo.id = id)) {
+        if (todo.id === id) {
           return { ...todo, completed: !todo.completed };
         }
         return todo;
@@ -42,9 +42,9 @@ function App() {
   // BUG 4: Filter logic is broken
   const getFilteredTodos = () => {
     if (filter === "active") {
-      return todos.filter((todo) => todo.completed);
-    } else if (filter === "completed") {
       return todos.filter((todo) => !todo.completed);
+    } else if (filter === "completed") {
+      return todos.filter((todo) => todo.completed);
     }
     return todos;
   };
